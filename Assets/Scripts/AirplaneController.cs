@@ -5,12 +5,14 @@ using UnityEngine;
 
 public class AirplaneController : MonoBehaviour
 {
-    public float speedAir = 50.0f;
-    public float turnSpeed;
-    private float horizontalInput;
-    private float forwardInput;
-    public float speedLand = 20f;
-
+    public float speedAir = 50.0f;//Speed when Flying
+    
+    public float turnSpeed;//Turn Plane Left and Right
+    private float horizontalInput;//Land Controls can be accessed using arrow keys
+    private float forwardInput;//
+    public float speedLand = 20f;//Speed when parked
+    
+    //Air Controls accessed using space and w a s d keys
     private Rigidbody rigidBody;
     public float rotateSpeed;
     public float jumpSpeed;
@@ -43,10 +45,7 @@ public class AirplaneController : MonoBehaviour
         }
         hRotate = new Vector3(0, 0, -Input.GetAxis("Horizontal2"));
         vRotate = new Vector3(-Input.GetAxis("Vertical2"), 0, 0);
-        // if (Input.GetKey("w"))
-        // {
-        //     rigidBody.MovePosition(rigidBody.position + transform.forward * Time.deltaTime * speedAir);
-        // }
+        
         if (Input.GetKey("space"))
         {
             rigidBody.MovePosition(rigidBody.position + transform.forward * Time.deltaTime * speedAir);
