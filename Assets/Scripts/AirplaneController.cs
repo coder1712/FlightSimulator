@@ -19,7 +19,8 @@ public class AirplaneController : MonoBehaviour
     public Camera CockpitCamera;
     public KeyCode switchKey;
 
-    Vector3 m_EulerAngleVelocity;
+    Vector3 hRotate;
+    Vector3 vRotate;
     void Start()
     {
         rigidBody = GetComponent<Rigidbody>();
@@ -40,19 +41,21 @@ public class AirplaneController : MonoBehaviour
             mainCamera.enabled = !mainCamera.enabled;
             CockpitCamera.enabled = !CockpitCamera.enabled;
         }
-        m_EulerAngleVelocity = new Vector3(0, 0, -Input.GetAxis("Horizontal2"));
-
-        if (Input.GetKey("w"))
+        hRotate = new Vector3(0, 0, -Input.GetAxis("Horizontal2"));
+        vRotate = new Vector3(-Input.GetAxis("Vertical2"), 0, 0);
+        // if (Input.GetKey("w"))
+        // {
+        //     rigidBody.MovePosition(rigidBody.position + transform.forward * Time.deltaTime * speedAir);
+        // }
+        if (Input.GetKey("space"))
         {
             rigidBody.MovePosition(rigidBody.position + transform.forward * Time.deltaTime * speedAir);
         }
-        if (Input.GetKey("w") && Input.GetKey("space"))
-        {
-            rigidBody.MovePosition(rigidBody.position + transform.up * jumpSpeed + transform.forward * Time.deltaTime * speedAir);
-        }
         speedAir -= transform.forward.y * Time.deltaTime * 10.0f;
-        Quaternion deltaRotation = Quaternion.Euler(m_EulerAngleVelocity * Time.fixedDeltaTime * rotateSpeed);
-        rigidBody.MoveRotation(rigidBody.rotation * deltaRotation);
+        Quaternion deltaHRotation = Quaternion.Euler(hRotate * Time.fixedDeltaTime * rotateSpeed);
+        rigidBody.MoveRotation(rigidBody.rotation * deltaHRotation);
+        Quaternion deltaVRotation = Quaternion.Euler(vRotate * Time.fixedDeltaTime * rotateSpeed);
+        rigidBody.MoveRotation(rigidBody.rotation * deltaVRotation);
 
     }
 
